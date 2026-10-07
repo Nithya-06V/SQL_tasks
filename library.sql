@@ -307,4 +307,150 @@ GROUP BY author
 HAVING AVG(price) > 600;
 
 
+SELECT book.book_name,members.member_name,borrow.borrow_date
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id;
+
+
+SELECT book.book_name,members.member_name
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id;
+
+SELECT book.book_name,book.author,members.member_name,members.city
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id;
+
+SELECT book.book_name,members.member_name,members.city
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id
+WHERE members.city='chennai';
+
+SELECT book.book_name,members.member_name
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id;
+
+SELECT members.member_name
+FROM members
+INNER JOIN borrow ON members.member_id=borrow.member_id
+INNER JOIN book ON borrow.book_id=book.book_id
+WHERE book.category='technology';
+
+
+SELECT book.book_name,members.member_name
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id;
+
+SELECT book.book_name,members.member_name,borrow.borrow_date
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+INNER JOIN members ON borrow.member_id=members.member_id
+ORDER BY borrow.borrow_date;
+
+
+
+SELECT book.book_name,members.member_name
+FROM book
+LEFT JOIN borrow ON book.book_id=borrow.book_id
+LEFT JOIN members ON borrow.member_id=members.member_id;
+
+SELECT book.book_id,book.book_name,members.member_name
+FROM book
+LEFT JOIN borrow ON book.book_id=borrow.book_id
+LEFT JOIN members ON borrow.member_id=members.member_id;
+
+SELECT members.member_name,book.book_name
+FROM members
+LEFT JOIN borrow ON members.member_id=borrow.member_id
+LEFT JOIN book ON borrow.book_id=book.book_id;
+
+SELECT members.member_id,members.member_name,book.book_name
+FROM members
+LEFT JOIN borrow ON members.member_id=borrow.member_id
+LEFT JOIN book ON borrow.book_id=book.book_id;
+
+SELECT book.book_id,book.book_name
+FROM book
+LEFT JOIN borrow ON book.book_id=borrow.book_id
+WHERE borrow.book_id IS NULL;
+
+SELECT members.member_id,members.member_name
+FROM members
+LEFT JOIN borrow ON members.member_id=borrow.member_id
+WHERE borrow.member_id IS NULL;
+
+
+
+
+SELECT borrow.borrow_id,borrow.book_id,book.book_name
+FROM book
+RIGHT JOIN borrow ON book.book_id=borrow.book_id;
+
+SELECT borrow.borrow_id,borrow.book_id,book.book_name
+FROM book
+RIGHT JOIN borrow ON book.book_id=borrow.book_id;
+
+SELECT members.member_id,members.member_name,borrow.borrow_id,borrow.borrow_date
+FROM borrow
+RIGHT JOIN members ON borrow.member_id=members.member_id;
+
+
+
+
+
+SELECT book.book_name,members.member_name
+FROM book
+CROSS JOIN members;
+
+SELECT COUNT(*) AS total_combinations
+FROM book
+CROSS JOIN members;
+
+SELECT members.member_name,book.book_name
+FROM members
+CROSS JOIN book
+WHERE book.category='technology';
+
+
+
+
+
+
+
+
+SELECT members.member_name,COUNT(borrow.book_id) AS book_count
+FROM members
+LEFT JOIN borrow ON members.member_id=borrow.member_id
+GROUP BY members.member_id,members.member_name;
+
+
+SELECT book.book_name,COUNT(DISTINCT borrow.member_id) AS member_count
+FROM book
+LEFT JOIN borrow ON book.book_id=borrow.book_id
+GROUP BY book.book_id,book.book_name;
+
+
+SELECT book.book_name,COUNT(borrow.book_id) AS borrow_count
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+GROUP BY book.book_id,book.book_name
+ORDER BY borrow_count DESC
+LIMIT 1;
+
+SELECT members.member_name,COUNT(borrow.book_id) AS book_count
+FROM members
+INNER JOIN borrow ON members.member_id=borrow.member_id
+GROUP BY members.member_id,members.member_name
+HAVING COUNT(borrow.book_id)>2;
+
+
+SELECT book.category,COUNT(borrow.book_id) AS borrow_count
+FROM book
+INNER JOIN borrow ON book.book_id=borrow.book_id
+GROUP BY book.category;
 
